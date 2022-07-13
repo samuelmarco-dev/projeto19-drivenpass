@@ -1,11 +1,9 @@
 import joi from 'joi';
 
-export interface User{
-    email: string;
-    password: string;
-}
+import { User } from '../repositories/authRepository.js';
+export type UserBody = Omit<User, "id">
 
-const schemaAuth: joi.ObjectSchema<User> = joi.object({
+const schemaAuth: joi.ObjectSchema<UserBody> = joi.object({
     email: joi.string().email().required(),
     password: joi.string().min(10).required()
 })
