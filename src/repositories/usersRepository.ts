@@ -18,6 +18,15 @@ export async function findUserByEmail(email: string){
     return result.rows[0];
 }
 
+export async function findUserById(id: number){
+    const sql = sqlsting.format(`
+        SELECT * FROM "users" WHERE "id" = ?
+    `, [id]);
+
+    const result = await connection.query<User, [number]>(sql);
+    return result.rows[0];
+}
+
 export async function insertUser(user: UserBody){
     const { email, password } = user
     const sql = sqlsting.format(`

@@ -1,18 +1,32 @@
 import { Request, Response } from "express";
 
 import { UserBody } from "../schemas/schemaAuth.js";
-import { User } from "../repositories/authRepository.js";
+import { User } from "../repositories/usersRepository.js";
 import * as authService from "../services/authService.js";
 
 export async function createSignUpUser(req: Request, res: Response){
     const { email, password }: UserBody = req.body;
-    const  user: User = res.locals.user;
+    const user: User = res.locals.user;
     if(user) return res.status(409).send('User already registered in the database');
 
-    await authService.createSignUpUser(email.toLowerCase(), password);
+    await authService.createSignUpUser(email, password);
     return res.sendStatus(201);
 }
 
 export async function createSignInUser(req: Request, res: Response){
+    const { email, password }: UserBody = req.body;
+    const  user: User = res.locals.user;
 
+    const verifyUser = user.email !== email || !user;
+    if(verifyUser) return res.status(404).send('User not registered in the database');
+
+    const token = await authService.createSignInUser(user, password);
+    return res.status(200).send(token);
+}
+
+export async function createLogoutUser(req: Request, res: Response){
+    const token: string = res.locals.token;
+
+    await authService.createLogoutUser(token);
+    res.sendStatus(200);
 }
