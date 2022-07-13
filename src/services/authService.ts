@@ -1,3 +1,4 @@
+import { UserSession } from './../repositories/sessionsRepository';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -6,12 +7,6 @@ dotenv.config();
 import * as userRepository from "../repositories/usersRepository.js";
 import * as sessionRepository from "../repositories/sessionsRepository.js";
 import { User } from '../repositories/usersRepository.js';
-
-interface TokenPayload{
-    id: string;
-    iat: number;
-    expiresIn: number;
-}
 
 export async function createSignUpUser(email: string, password: string){
     const salt = await bcrypt.genSalt(10);
@@ -40,38 +35,17 @@ export async function createSignInUser(user: User, password: string){
     return token;
 }
 
-export async function createLogoutUser(token: string) {
-    const userId = verifyValidToken(token);
-    const user = await userRepository.findUserById(Number(userId));
+export async function createLogoutUser(token: string, session: UserSession, user: User) {
+    const id = session.userId;
 
     if(!user) throw{
         type: "UserNotFound",
         message: "User not found"
     }
-    if(Number(userId) !== user.id) throw{
+    if(id !== user.id) throw{
         type: "UserIdNotMatch",
         message: "User id not match"
     }
 
     await sessionRepository.updateSession(token, user.id);
-}
-
-async function verifyValidToken(token: string){
-    const secret = process.env.JWT_SECRET;
-    const verification = jwt.verify(token, secret);
-
-    if(!verification) throw{
-        type: "InvalidToken",
-        message: "Invalid token"
-    }
-    const {id} = verification as TokenPayload;
-
-    const session = await sessionRepository.findSessionUser(token);
-    const verifySession = !session || !session.isActive || session.userId !== Number(id);
-    if(verifySession) throw{
-        type: "SessionError",
-        message: "Session error"
-    }
-
-    return id;
 }

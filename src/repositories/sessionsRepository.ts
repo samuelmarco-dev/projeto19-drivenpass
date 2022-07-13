@@ -3,7 +3,7 @@ import sqlsting from "sqlstring";
 import connection from "../config/database.js";
 import { User } from "./usersRepository.js";
 
-interface UserSession {
+export interface UserSession {
     id: number;
     userId: number;
     token: string;
