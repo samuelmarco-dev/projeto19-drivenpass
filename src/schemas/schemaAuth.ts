@@ -1,7 +1,7 @@
 import joi from 'joi';
 
-import { User } from '../repositories/usersRepository.js';
-export type UserBody = Omit<User, "id">
+import { User } from "@prisma/client";
+export type UserBody = Omit<User, "id" | "createdAt">;
 
 const schemaAuth: joi.ObjectSchema<UserBody> = joi.object({
     email: joi.string().lowercase().email().required(),

@@ -1,12 +1,11 @@
-import { UserSession } from './../repositories/sessionsRepository';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { Session, User } from "@prisma/client";
 import * as userRepository from "../repositories/usersRepository.js";
 import * as sessionRepository from "../repositories/sessionsRepository.js";
-import { User } from '../repositories/usersRepository.js';
 
 export async function createSignUpUser(email: string, password: string){
     const salt = await bcrypt.genSalt(10);
@@ -35,7 +34,7 @@ export async function createSignInUser(user: User, password: string){
     return token;
 }
 
-export async function createLogoutUser(token: string, session: UserSession, user: User) {
+export async function createLogoutUser(token: string, session: Session, user: User) {
     const id = session.userId;
 
     if(!user) throw{
@@ -47,5 +46,5 @@ export async function createLogoutUser(token: string, session: UserSession, user
         message: "User id not match"
     }
 
-    await sessionRepository.updateSession(token, user.id);
+    await sessionRepository.updateSession(token);
 }

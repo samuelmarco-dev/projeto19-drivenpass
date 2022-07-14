@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+import { User } from "@prisma/client";
 import { UserBody } from "../schemas/schemaAuth.js";
 import * as userRepository from "../repositories/usersRepository.js";
 
@@ -7,7 +8,7 @@ export default async function verifyRegisteredUser(req: Request, res: Response, 
     const { email, password }: UserBody = req.body;
     if(!email || !password) return res.sendStatus(400);
 
-    const userFound = await userRepository.findUserByEmail(email);
+    const userFound: User = await userRepository.findUserByEmail(email);
     res.locals.user = userFound;
     next();
 }

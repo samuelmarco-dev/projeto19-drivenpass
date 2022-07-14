@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import * as sessionRepository from "../repositories/sessionsRepository.js";
-import { UserSession } from "../repositories/sessionsRepository.js";
+import { Session } from "@prisma/client";
 
 interface TokenPayload{
     id: string;
@@ -34,7 +34,7 @@ export async function verifyValidToken(token: string){
             const session = await sessionRepository.findSessionUser(token);
             verifyFindUserSession(session);
 
-            await sessionRepository.updateSession(token, session.userId);
+            await sessionRepository.updateSession(token);
         }
         throw {
             type: "InvalidToken",
@@ -43,7 +43,7 @@ export async function verifyValidToken(token: string){
     }
 }
 
-function verifyFindUserSession(session: UserSession){
+function verifyFindUserSession(session: Session){
     const verifySession = !session || !session.isActive;
     if(verifySession) throw{
         type: "SessionError",
