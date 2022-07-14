@@ -18,8 +18,7 @@ export async function createSignInUser(req: Request, res: Response){
     const { email, password }: UserBody = req.body;
     const  user: User = res.locals.user;
 
-    const verifyUser = user.email !== email || !user;
-    if(verifyUser) return res.status(404).send('User not registered in the database');
+    if(user.email !== email) return res.sendStatus(404);
 
     const token = await authService.createSignInUser(user, password);
     return res.status(200).send(token);

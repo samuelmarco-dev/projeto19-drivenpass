@@ -9,6 +9,8 @@ export default async function verifyRegisteredUser(req: Request, res: Response, 
     if(!email || !password) return res.sendStatus(400);
 
     const userFound: User = await userRepository.findUserByEmail(email);
+    if(!userFound) return res.sendStatus(404);
+
     res.locals.user = userFound;
     next();
 }

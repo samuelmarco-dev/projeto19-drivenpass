@@ -11,9 +11,14 @@ export async function findUserByEmail(email: string){
     // const result = await connection.query<User, [string]>(sql);
     // return result.rows[0];
 
+    // const user = await prisma.user.findFirst({
+    //     where: {
+    //         email
+    //     }
+    // });
     return await prisma.user.findUnique({
         where: { email }
-    });
+    })
 }
 
 export async function findUserById(id: number){
