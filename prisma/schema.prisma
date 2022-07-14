@@ -11,13 +11,16 @@ datasource db {
 }
 
 model User {
-    id         Int          @id @default(autoincrement())
-    email      String       @unique
-    password   String
-    createdAt  DateTime     @default(now())
+    id        Int      @id @default(autoincrement())
+    email     String   @unique
+    password  String
+    createdAt DateTime @default(now())
+
     Session    Session[]
     Credencial Credencial[]
     Card       Card[]
+    SecureNote SecureNote[]
+    Wifi       Wifi[]
 
     @@map("users")
 }
@@ -49,6 +52,12 @@ model Credencial {
     @@map("credencials")
 }
 
+enum CardType {
+    Credit
+    Debit
+    CreditDebit
+}
+
 model Card {
     id             Int      @id @default(autoincrement())
     user           User     @relation(fields: [userId], references: [id])
@@ -65,4 +74,31 @@ model Card {
     updatedAt      DateTime @default(now())
 
     @@map("cards")
+}
+
+model SecureNote {
+    id        Int      @id @default(autoincrement())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    title     String
+    content   String
+    isDeleted Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    @@map("secure_notes")
+}
+
+model Wifi {
+    id        Int      @id @default(autoincrement())
+    user      User     @relation(fields: [userId], references: [id])
+    userId    Int
+    title     String
+    ssid      String
+    password  String
+    isDeleted Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now())
+
+    @@map("keys_wifi")
 }
