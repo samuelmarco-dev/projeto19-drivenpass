@@ -49,6 +49,7 @@ model Credential {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
+    @@unique([title, userId])
     @@map("credentials")
 }
 
@@ -73,6 +74,7 @@ model Card {
     createdAt      DateTime @default(now())
     updatedAt      DateTime @default(now())
 
+    @@unique([title, userId])
     @@map("cards")
 }
 
@@ -86,6 +88,7 @@ model SecureNote {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
+    @@unique([title, userId])
     @@map("secure_notes")
 }
 
@@ -100,5 +103,6 @@ model Wifi {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
+    @@unique([title, userId])
     @@map("keys_wifi")
 }
