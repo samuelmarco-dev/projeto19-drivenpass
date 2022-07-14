@@ -4,13 +4,17 @@ import chalk from "chalk";
 export default async function handleError(err, req: Request, res: Response, next: NextFunction){
     if(err){
         console.log(chalk.red('error: ', err));
-        if(unauthorized(err)) return res.status(401).send('Unauthorized');
+        if(unauthorized(err.type)) return res.status(401).send('Unauthorized');
     }
 
     res.sendStatus(500);
 }
 
-function unauthorized(err){
-    const verification = err.type === ('InvalidToken' || 'SessionError' || 'InvalidPassword' || 'TokenExpired');
-    return verification;
+function unauthorized(err: string){
+    if(err === 'InvalidToken') return true;
+    if(err === 'SessionError') return true;
+    if(err === 'InvalidPassword') return true;
+    if(err === 'TokenExpired') return true;
+
+    return false;
 }
