@@ -11,6 +11,6 @@ export default async function handleError(err, req: Request, res: Response, next
 }
 
 function unauthorized(err){
-    const verification = err.type === ('InvalidToken' || 'SessionError' || 'InvalidPassword');
+    const verification = err.type === ('InvalidToken' || 'SessionError' || 'InvalidPassword' || 'TokenExpired');
     return verification;
 }

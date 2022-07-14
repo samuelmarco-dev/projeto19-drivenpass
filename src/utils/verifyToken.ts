@@ -35,6 +35,10 @@ export async function verifyValidToken(token: string){
             verifyFindUserSession(session);
 
             await sessionRepository.updateSession(token);
+            throw{
+                type: "TokenExpired",
+                message: "Token expired"
+            }
         }
         throw {
             type: "InvalidToken",
