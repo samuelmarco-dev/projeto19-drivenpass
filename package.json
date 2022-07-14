@@ -23,6 +23,7 @@
     "homepage": "https://github.com/samuelmarco-dev/projeto19-drivenpass#readme",
     "dependencies": {
         "@faker-js/faker": "^7.3.0",
+        "@prisma/client": "^4.0.0",
         "bcrypt": "^5.0.1",
         "chalk": "^5.0.1",
         "cors": "^2.8.5",
@@ -35,8 +36,6 @@
         "joi": "^17.6.0",
         "jsonwebtoken": "^8.5.1",
         "morgan": "^1.10.0",
-        "pg": "^8.7.3",
-        "sqlstring": "^2.3.3",
         "ts-node": "^10.8.2",
         "typescript": "^4.7.4"
     },
@@ -49,8 +48,6 @@
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
         "@types/node": "^18.0.3",
-        "@types/pg": "^8.6.5",
-        "@types/sqlstring": "^2.3.0",
         "nodemon": "^2.0.19",
         "prisma": "^4.0.0"
     }
