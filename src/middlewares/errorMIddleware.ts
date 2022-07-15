@@ -24,6 +24,7 @@ function unauthorized(err: string){
 
 function notFound(err: string){
     if(err === 'UserNotFound') return true;
+    if(err === 'CredentialNotFound') return true;
 
     return false;
 }

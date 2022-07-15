@@ -9,6 +9,6 @@ const credentialRouter = Router();
 
 credentialRouter.post('/credential', validationSchema(schemaCredencial), validationTokenUser, createCredentialUser);
 credentialRouter.get('/credentials', validationTokenUser, getCredential);
-credentialRouter.get('/credentials/:id', validationTokenUser, getCredentialById);
+credentialRouter.get('/credential/:id', validationTokenUser, getCredentialById);
 
 export default credentialRouter;

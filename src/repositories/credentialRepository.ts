@@ -33,3 +33,13 @@ export async function getCredentials(user: User){
         }
     });
 }
+
+export async function getCredentialById(id: number, user: User){
+    return await prisma.credential.findFirst({
+        where: {
+            id,
+            userId: user.id,
+            isDeleted: false
+        }
+    })
+}

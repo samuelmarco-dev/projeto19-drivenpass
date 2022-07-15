@@ -30,4 +30,11 @@ export async function getCredential(req: Request, res: Response){
 
 export async function getCredentialById(req: Request, res: Response){
     const { id } = req.params;
+    const session: Session = res.locals.session;
+
+    if(!id) return res.status(400).send("Missing id");
+    const user = await userRepository.findUserById(session.userId);
+
+    const credential = await credentialService.getCredentialById(Number(id), user, session);
+    res.status(200).send(credential);
 }
