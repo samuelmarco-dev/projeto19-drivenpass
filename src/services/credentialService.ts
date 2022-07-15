@@ -54,3 +54,18 @@ export async function getCredentialById(id: number, user: User, session: Session
     const decryptedPassword = decryptCryptrData(password);
     return { ...credential, password: decryptedPassword };
 }
+
+export async function deleteCredentialById(id: number, user: User, session: Session) {
+    const idUser = session.userId;
+    verifyUser(user, idUser);
+
+    const credential = await credentialRepository.getCredentialById(id, user);
+    const verify = !credential || credential.userId !== user.id || credential.id !== id;
+
+    if(verify) throw {
+        type: "CredentialNotFound",
+        message: "Credential not found"
+    }
+
+    await credentialRepository.deleteCredentialById(id);
+}

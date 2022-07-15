@@ -43,3 +43,15 @@ export async function getCredentialById(id: number, user: User){
         }
     })
 }
+
+export async function deleteCredentialById(id: number){
+    await prisma.credential.update({
+        where: {
+            id
+        },
+        data: {
+            isDeleted: true,
+            updatedAt: dayjs().format()
+        }
+    });
+}

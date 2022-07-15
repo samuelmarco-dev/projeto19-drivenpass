@@ -38,3 +38,14 @@ export async function getCredentialById(req: Request, res: Response){
     const credential = await credentialService.getCredentialById(Number(id), user, session);
     res.status(200).send(credential);
 }
+
+export async function deleteCredentialById(req: Request, res: Response){
+    const { id } = req.params;
+    const session: Session = res.locals.session;
+
+    if(!id) return res.status(400).send("Missing id");
+    const user = await userRepository.findUserById(session.userId);
+
+    await credentialService.deleteCredentialById(Number(id), user, session);
+    res.sendStatus(200);
+}
