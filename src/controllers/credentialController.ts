@@ -1,5 +1,17 @@
 import { Request, Response } from "express";
 
-export async function createCredentialUser(req: Request, res: Response){
+import { Session } from "@prisma/client";
+import { CredentialData } from "../schemas/schemaCredencial.js";
+import * as userRepository from "../repositories/usersRepository.js";
+import * as credentialService from "../services/credentialService.js";
 
+export async function createCredentialUser(req: Request, res: Response){
+    const { title, url, username, password }: CredentialData = req.body;
+    const session: Session = res.locals.session;
+
+    if(!title || !url || !username || !password) return res.status(400).send("Missing credentials");
+    const user = await userRepository.findUserById(session.userId);
+
+    await credentialService.createCredential({ title, url, username, password }, user, session);
+    res.sendStatus(201);
 }

@@ -11,10 +11,7 @@ export async function createSignUpUser(email: string, password: string){
     const salt = await bcrypt.genSalt(10);
     const encryptedPassword = await bcrypt.hash(password, salt);
 
-    const objUser = {
-        email, password: encryptedPassword
-    }
-    await userRepository.insertUser(objUser);
+    await userRepository.insertUser({ email, password: encryptedPassword });
 }
 
 export async function createSignInUser(user: User, password: string){
@@ -36,7 +33,12 @@ export async function createSignInUser(user: User, password: string){
 
 export async function createLogoutUser(token: string, session: Session, user: User) {
     const id = session.userId;
+    verifyUser(user, id);
 
+    await sessionRepository.updateSession(token);
+}
+
+export function verifyUser(user: User, id: number){
     if(!user) throw{
         type: "UserNotFound",
         message: "User not found"
@@ -45,6 +47,4 @@ export async function createLogoutUser(token: string, session: Session, user: Us
         type: "UserIdNotMatch",
         message: "User id not match"
     }
-
-    await sessionRepository.updateSession(token);
 }

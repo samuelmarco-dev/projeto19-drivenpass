@@ -12,7 +12,7 @@ export async function insertSessionUser(token: string, user: User){
             createdAt: dayjs().format(),
             updatedAt: dayjs().format()
         }
-    })
+    });
 }
 
 export async function findSessionUser(token: string){
@@ -28,5 +28,5 @@ export async function updateSession(token: string){
             isActive: false,
             updatedAt: dayjs().format()
         }
-    })
+    });
 }
