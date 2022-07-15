@@ -3,7 +3,7 @@ import { Router } from "express";
 import authRouter from "./authRouter.js";
 import cardRouter from "./cardRouter.js";
 import credentialRouter from "./credentialRouter.js";
-import secureNoteRouter from "./secureNote.js";
+import secureNoteRouter from "./secureNoteRouter.js";
 import wifiRouter from "./wifiRouter.js";
 
 const routes = Router();

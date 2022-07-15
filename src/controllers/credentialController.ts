@@ -5,10 +5,6 @@ import { CredentialData } from "../schemas/schemaCredencial.js";
 import * as userRepository from "../repositories/usersRepository.js";
 import * as credentialService from "../services/credentialService.js";
 
-interface Params{
-    id: string;
-}
-
 export async function createCredentialUser(req: Request, res: Response){
     const { title, url, username, password }: CredentialData = req.body;
     const session: Session = res.locals.session;
