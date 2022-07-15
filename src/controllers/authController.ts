@@ -11,7 +11,7 @@ export async function createSignUpUser(req: Request, res: Response){
     if(user) return res.status(409).send('User already registered in the database');
 
     await authService.createSignUpUser(email, password);
-    return res.sendStatus(201);
+    res.sendStatus(201);
 }
 
 export async function createSignInUser(req: Request, res: Response){
