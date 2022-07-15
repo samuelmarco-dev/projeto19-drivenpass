@@ -8,9 +8,10 @@ export default async function validationTokenUser(req: Request, res: Response, n
     if(!token) return res.sendStatus(401);
 
     const sessionToken = await verifyValidToken(token);
-    if(!sessionToken || sessionToken.id !== sessionToken.session.userId) return res.sendStatus(401);
+    const { id, session } = sessionToken;
+    if(id !== session.userId) return res.sendStatus(401);
 
     res.locals.token = token;
-    res.locals.session = sessionToken.session;
+    res.locals.session = session;
     next();
 }

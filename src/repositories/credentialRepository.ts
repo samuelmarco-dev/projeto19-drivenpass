@@ -24,3 +24,12 @@ export async function insertCredential(credential: CredentialData, user: User){
         }
     });
 }
+
+export async function getCredentials(user: User){
+    return await prisma.credential.findMany({
+        where: {
+            userId: user.id,
+            isDeleted: false
+        }
+    });
+}
