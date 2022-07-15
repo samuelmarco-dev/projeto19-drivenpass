@@ -30,7 +30,8 @@ export async function verifyValidToken(token: string){
             session: session
         };
     } catch (error) {
-        if(error.name === "TokenExpiredError"){
+        console.log('err', error);
+        if(error.name === "TokenExpiredError" || error.name === "JsonWebTokenError"){
             const session = await sessionRepository.findSessionUser(token);
             verifyFindUserSession(session);
 

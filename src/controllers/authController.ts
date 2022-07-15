@@ -18,7 +18,8 @@ export async function createSignInUser(req: Request, res: Response){
     const { email, password }: UserBody = req.body;
     const  user: User = res.locals.user;
 
-    if(user.email !== email) return res.sendStatus(404);
+    if(!user) return res.status(404).send('User not found');
+    if(user.email !== email) return res.sendStatus(400);
 
     const token = await authService.createSignInUser(user, password);
     return res.status(200).send(token);

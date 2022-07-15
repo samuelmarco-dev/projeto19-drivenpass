@@ -25,7 +25,7 @@ export async function createSignInUser(user: User, password: string){
     }
 
     const secret = process.env.JWT_SECRET;
-    const validity = { expiresIn: 3600}
+    const validity = { expiresIn: 3600 }
     const token = jwt.sign({
         id: user.id
     }, secret, validity);
