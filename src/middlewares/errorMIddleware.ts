@@ -27,6 +27,7 @@ function notFound(err: string){
     if(err === 'CredentialNotFound') return true;
     if(err === 'SecureNoteNotFound') return true;
     if(err === 'WifiNotFound') return true;
+    if(err === 'CardNotFound') return true;
 
     return false;
 }
@@ -34,6 +35,7 @@ function notFound(err: string){
 function conflict(err: string){
     if(err === 'CredentialAlreadyExists') return true;
     if(err === 'SecureNoteAlreadyExists') return true;
+    if(err === 'CardAlreadyExists') return true;
 
     return false;
 }
