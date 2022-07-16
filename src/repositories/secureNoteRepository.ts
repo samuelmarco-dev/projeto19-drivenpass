@@ -23,3 +23,22 @@ export async function createSecureNote(secureNote: NoteBody, user: User) {
         }
     })
 }
+
+export async function getSecureNotes(user: User) {
+    return await prisma.secureNote.findMany({
+        where: {
+            userId: user.id,
+            isDeleted: false
+        }
+    })
+}
+
+export async function getSecureNoteById(id: number, user: User){
+    return await prisma.secureNote.findFirst({
+        where: {
+            id,
+            userId: user.id,
+            isDeleted: false
+        }
+    })
+}

@@ -16,12 +16,23 @@ export async function createSecureNote(note: NoteBody, user: User, session: Sess
     await secureNoteRepository.createSecureNote(note, user);
 }
 
-export async function getSecureNotes(){
+export async function getSecureNotes(user: User, session: Session){
+    const id = session.userId;
+    verifyUser(user, id);
 
+    const secureNotes = await secureNoteRepository.getSecureNotes(user);
+    return {
+        userLogin: user.email,
+        secureNotes
+    };
 }
 
-export async function getSecureNoteById(){
+export async function getSecureNoteById(id: number, user: User, session: Session){
+    const idUser = session.userId;
+    verifyUser(user, idUser);
 
+    const secureNote = await secureNoteRepository.getSecureNoteById(id, user);
+    return secureNote;
 }
 
 export async function deleteSecureNoteById(){

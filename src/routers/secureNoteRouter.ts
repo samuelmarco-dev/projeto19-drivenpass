@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { createSecureNoteUser, deleteSecureNoteById, getSecureNoteById, getSecureNotes } from "../controllers/secureNoteController";
-import validationTokenUser from "../middlewares/authMiddleware";
-import validationSchema from "../middlewares/schemaMiddleware";
-import schemaNote from "../schemas/schemaNote";
+import { createSecureNoteUser, deleteSecureNoteById, getSecureNoteById, getSecureNotes } from "../controllers/secureNoteController.js";
+import validationTokenUser from "../middlewares/authMiddleware.js";
+import validationSchema from "../middlewares/schemaMiddleware.js";
+import schemaNote from "../schemas/schemaNote.js";
 
 const secureNoteRouter = Router();
 
