@@ -1,6 +1,6 @@
-import { SecureNote } from "@prisma/client";
 import joi from "joi";
 
+import { SecureNote } from "@prisma/client";
 export type NoteBody = Omit<SecureNote, "id" | "userId" | "isDeleted" | "createdAt" | "updatedAt">
 
 const schemaNote: joi.ObjectSchema<NoteBody> = joi.object({

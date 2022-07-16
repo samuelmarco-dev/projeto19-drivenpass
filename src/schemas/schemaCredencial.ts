@@ -1,6 +1,6 @@
 import joi from "joi";
-import { Credential } from "@prisma/client";
 
+import { Credential } from "@prisma/client";
 export type CredentialData = Omit<Credential, "id" | "userId" | "isDeleted" | "createdAt" | "updatedAt">
 
 const schemaCredential: joi.ObjectSchema<CredentialData> = joi.object({

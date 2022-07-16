@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
-import { User } from "@prisma/client";
 import prisma from "../config/database.js";
+import { User } from "@prisma/client";
 import { NoteBody } from "../schemas/schemaNote.js";
 
 export async function secureNoteExists(secureNote: NoteBody){

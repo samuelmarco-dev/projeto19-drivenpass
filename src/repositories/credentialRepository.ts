@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
 import dayjs from "dayjs";
 
 import prisma from "../config/database.js";
+import { User } from "@prisma/client";
 import { CredentialData } from "../schemas/schemaCredencial.js";
 
 export async function credentialExists(credential: CredentialData, user: User){
