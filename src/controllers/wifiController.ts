@@ -25,17 +25,19 @@ export async function getWifis(req: Request, res: Response){
 }
 
 export async function getWifiById(req: Request, res: Response){
+    const { id } = req.params;
     const session: Session = res.locals.session;
-
     const user = await userRepository.findUserById(session.userId);
 
-    res.status(200).send('');
+    const wifi = await wifiService.getWifiById(Number(id), user, session);
+    res.status(200).send(wifi);
 }
 
 export async function deleteWifiById(req: Request, res: Response){
+    const { id } = req.params;
     const session: Session = res.locals.session;
-
     const user = await userRepository.findUserById(session.userId);
 
+    await wifiService.deleteWifiById(Number(id), user, session);
     res.sendStatus(200);
 }

@@ -34,9 +34,34 @@ function returnWifiPassword(wifis: WifiData[]){
 }
 
 export async function getWifiById(id: number, user: User, session: Session){
+    const idUser = session.userId;
+    verifyUser(user, idUser);
 
+    const wifi = await wifiRepository.getWifiById(id, user);
+    const verify = !wifi || wifi.userId !== idUser || wifi.id !== id;
+
+    if(verify) throw{
+        type: "WifiNotFound",
+        message: "Wifi not found"
+    }
+
+    return {
+        ...wifi,
+        password: decryptCryptrData(wifi.password)
+    }
 }
 
 export async function deleteWifiById(id: number, user: User, session: Session){
+    const idUser = session.userId;
+    verifyUser(user, idUser);
 
+    const wifi = await wifiRepository.getWifiById(id, user);
+    const verify = !wifi || wifi.userId !== idUser || wifi.id !== id;
+
+    if(verify) throw{
+        type: "WifiNotFound",
+        message: "Wifi not found"
+    }
+
+    await wifiRepository.deleteWifiById(id);
 }

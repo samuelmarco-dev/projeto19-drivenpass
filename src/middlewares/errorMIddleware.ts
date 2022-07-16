@@ -26,6 +26,7 @@ function notFound(err: string){
     if(err === 'UserNotFound') return true;
     if(err === 'CredentialNotFound') return true;
     if(err === 'SecureNoteNotFound') return true;
+    if(err === 'WifiNotFound') return true;
 
     return false;
 }
