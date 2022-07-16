@@ -24,3 +24,23 @@ export async function getWifisUser(user: User){
         }
     })
 }
+
+export async function getWifiById(id: number, user: User){
+    await prisma.wifi.findFirst({
+        where: {
+            id,
+            userId: user.id,
+            isDeleted: false
+        }
+    })
+}
+
+export async function deleteWifiById(id: number){
+    await prisma.wifi.update({
+        where: { id },
+        data: {
+            isDeleted: true,
+            updatedAt: dayjs().format()
+        }
+    })
+}
