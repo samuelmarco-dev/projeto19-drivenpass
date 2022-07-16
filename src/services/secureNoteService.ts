@@ -32,6 +32,13 @@ export async function getSecureNoteById(id: number, user: User, session: Session
     verifyUser(user, idUser);
 
     const secureNote = await secureNoteRepository.getSecureNoteById(id, user);
+    const verify = !secureNote || secureNote.userId !== user.id || secureNote.id !== id;
+
+    if(verify) throw {
+        type: "SecureNoteNotFound",
+        message: "Secure note not found"
+    }
+
     return secureNote;
 }
 

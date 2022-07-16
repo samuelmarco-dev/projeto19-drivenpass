@@ -32,6 +32,7 @@ function notFound(err: string){
 
 function conflict(err: string){
     if(err === 'CredentialAlreadyExists') return true;
+    if(err === 'SecureNoteAlreadyExists') return true;
 
     return false;
 }
