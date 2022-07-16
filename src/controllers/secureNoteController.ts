@@ -34,5 +34,10 @@ export async function getSecureNoteById(req: Request, res: Response){
 }
 
 export async function deleteSecureNoteById(req: Request, res: Response){
+    const { id } = req.params;
+    const session: Session = res.locals.session;
+    const user = await userRepository.findUserById(session.userId);
 
+    await secureNoteService.deleteSecureNoteById(Number(id), user, session);
+    res.sendStatus(200);
 }

@@ -1,5 +1,6 @@
-import { User } from "@prisma/client";
 import dayjs from "dayjs";
+
+import { User } from "@prisma/client";
 import prisma from "../config/database.js";
 import { NoteBody } from "../schemas/schemaNote.js";
 
@@ -39,6 +40,18 @@ export async function getSecureNoteById(id: number, user: User){
             id,
             userId: user.id,
             isDeleted: false
+        }
+    })
+}
+
+export async function deleteSecureNoteById(id: number){
+    await prisma.secureNote.update({
+        where: {
+            id
+        },
+        data: {
+            isDeleted: true,
+            updatedAt: dayjs().format()
         }
     })
 }
