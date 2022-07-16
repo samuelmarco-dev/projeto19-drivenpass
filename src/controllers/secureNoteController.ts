@@ -27,6 +27,8 @@ export async function getSecureNotes(req: Request, res: Response){
 export async function getSecureNoteById(req: Request, res: Response){
     const { id } = req.params;
     const session: Session = res.locals.session;
+
+    if(!id) return res.status(400).send("Missing id");
     const user = await userRepository.findUserById(session.userId);
 
     const secureNoteId = await secureNoteService.getSecureNoteById(Number(id), user, session);
@@ -36,6 +38,8 @@ export async function getSecureNoteById(req: Request, res: Response){
 export async function deleteSecureNoteById(req: Request, res: Response){
     const { id } = req.params;
     const session: Session = res.locals.session;
+
+    if(!id) return res.status(400).send("Missing id");
     const user = await userRepository.findUserById(session.userId);
 
     await secureNoteService.deleteSecureNoteById(Number(id), user, session);
