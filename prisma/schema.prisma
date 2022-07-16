@@ -103,6 +103,5 @@ model Wifi {
     createdAt DateTime @default(now())
     updatedAt DateTime @default(now())
 
-    @@unique([title, userId])
     @@map("keys_wifi")
 }
