@@ -71,6 +71,7 @@ model Card {
     password       String
     isVirtual      Boolean  @default(false)
     isDeleted      Boolean  @default(false)
+    typeCard       CardType
     createdAt      DateTime @default(now())
     updatedAt      DateTime @default(now())
 
@@ -97,7 +98,7 @@ model Wifi {
     user      User     @relation(fields: [userId], references: [id])
     userId    Int
     title     String
-    network      String
+    network   String
     password  String
     isDeleted Boolean  @default(false)
     createdAt DateTime @default(now())
