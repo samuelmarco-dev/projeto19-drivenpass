@@ -23,7 +23,7 @@ export async function getCredentials(user: User, session: Session){
     verifyUser(user, id);
 
     const credentials = await credentialRepository.getCredentials(user);
-    const credentialDecrypted = await returnCredentialsPassword(credentials);
+    const credentialDecrypted = returnCredentialsPassword(credentials);
 
     return {
         userLogin: user.email,
@@ -31,7 +31,7 @@ export async function getCredentials(user: User, session: Session){
     };
 }
 
-async function returnCredentialsPassword(credentials: CredentialData[]){
+function returnCredentialsPassword(credentials: CredentialData[]){
     return credentials.map(credential => {
         const { password } = credential;
         const decryptedPassword = decryptCryptrData(password);
@@ -45,6 +45,7 @@ export async function getCredentialById(id: number, user: User, session: Session
 
     const credential = await credentialRepository.getCredentialById(id, user);
     const verify = !credential || credential.userId !== user.id || credential.id !== id;
+
     if(verify) throw {
         type: "CredentialNotFound",
         message: "Credential not found"

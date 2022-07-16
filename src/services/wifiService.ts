@@ -20,7 +20,7 @@ export async function getWifis(user: User, session: Session){
     const wifisDecrypted = returnWifiPassword(wifis);
 
     return{
-        userLogged: user.email,
+        userLogin: user.email,
         wifis: wifisDecrypted
     }
 }
