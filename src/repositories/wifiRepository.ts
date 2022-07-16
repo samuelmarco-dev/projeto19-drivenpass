@@ -15,3 +15,12 @@ export async function insertWifi(wifi: WifiData, user: User){
         }
     })
 }
+
+export async function getWifisUser(user: User){
+    return await prisma.wifi.findMany({
+        where: {
+            userId: user.id,
+            isDeleted: false
+        }
+    })
+}
