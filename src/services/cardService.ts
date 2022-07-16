@@ -1,7 +1,7 @@
 import { Card, Session, User } from '@prisma/client';
 import { CardData } from '../schemas/schemaCard.js';
 import { verifyUser } from './authService.js';
-import { createCryptrData } from '../utils/createCryptr.js';
+import { createCryptrData, decryptCryptrData } from '../utils/createCryptr.js';
 import * as cardRepository from "../repositories/cardRepository.js";
 
 export async function createCard(card: CardData, session: Session, user: User){
@@ -15,7 +15,11 @@ export async function createCard(card: CardData, session: Session, user: User){
     }
 
     const encryptedPassword = createCryptrData(card.password);
-    await cardRepository.inserCard({ ...card, password: encryptedPassword }, user);
+    const encryptedCvv = createCryptrData(card.securityCode);
+
+    await cardRepository.inserCard({
+        ...card, password: encryptedPassword, securityCode: encryptedCvv
+    }, user);
 }
 
 export async function getCards(user: User, session: Session){
@@ -33,9 +37,11 @@ export async function getCards(user: User, session: Session){
 
 function returnCardsPassword(card: Card[]){
     return card.map(card => {
-        const { password } = card;
-        const decryptedPassword = createCryptrData(password);
-        return { ...card, password: decryptedPassword };
+        const { password, securityCode } = card;
+        const decryptedPassword = decryptCryptrData(password);
+        const decryptedCvv = decryptCryptrData(securityCode);
+
+        return { ...card, password: decryptedPassword, securityCode: decryptedCvv };
     });
 }
 
@@ -51,10 +57,11 @@ export async function getCardById(id: number, session: Session, user: User){
         message: 'Card not found'
     }
 
-    const { password } = card;
-    const decryptedPassword = createCryptrData(password);
+    const { password, securityCode } = card;
+    const decryptedPassword = decryptCryptrData(password);
+    const decrtptedCvv = decryptCryptrData(securityCode)
 
-    return { ...card, password: decryptedPassword };
+    return { ...card, password: decryptedPassword, securityCode: decrtptedCvv };
 }
 
 export async function deleteCardById(id: number, session: Session, user: User){

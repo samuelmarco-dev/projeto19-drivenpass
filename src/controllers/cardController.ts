@@ -14,7 +14,7 @@ export async function createCardUser(req: Request, res: Response){
     const verifyBody = !title || !number || !cardholderName || !securityCode ||
     !expirationDate || !password || !isVirtual || !typeCard;
 
-    if(verifyBody) return res.status(400).send("Missing data");
+    if(verifyBody || typeof(isVirtual) !== 'boolean') return res.status(400).send("Missing data");
     const user = await userRepository.findUserById(session.userId);
 
     await cardService.createCard({ title, number, cardholderName, securityCode,
