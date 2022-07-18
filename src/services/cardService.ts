@@ -9,7 +9,9 @@ export async function createCard(card: CardData, session: Session, user: User){
     verifyUser(user, id);
 
     const cardFound = await cardRepository.existsCard(card, user);
-    if(cardFound) throw{
+    const numberFound = await cardRepository.findNumber(card);
+
+    if(cardFound || numberFound.length) throw{
         type: "CardAlreadyExists",
         message: "Card already exists"
     }

@@ -7,7 +7,7 @@ export async function createSecureNote(note: NoteBody, user: User, session: Sess
     const id = session.userId;
     verifyUser(user, id);
 
-    const noteFound = await secureNoteRepository.secureNoteExists(note);
+    const noteFound = await secureNoteRepository.secureNoteExists(note, user);
     if(noteFound) throw {
         type: "SecureNoteAlreadyExists",
         message: "Secure note already exists"

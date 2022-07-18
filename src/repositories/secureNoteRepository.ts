@@ -4,11 +4,12 @@ import prisma from "../config/database.js";
 import { User } from "@prisma/client";
 import { NoteBody } from "../schemas/schemaNote.js";
 
-export async function secureNoteExists(secureNote: NoteBody){
+export async function secureNoteExists(secureNote: NoteBody, user: User){
     return await prisma.secureNote.findFirst({
         where: {
             title: secureNote.title,
-            content: secureNote.content
+            content: secureNote.content,
+            userId: user.id
         }
     })
 }

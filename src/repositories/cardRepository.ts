@@ -14,6 +14,14 @@ export async function existsCard(card: CardData, user: User){
     });
 }
 
+export async function findNumber(card: CardData){
+    return await prisma.card.findMany({
+        where: {
+            number: card.number
+        }
+    });
+}
+
 export async function inserCard(card: CardData, user: User){
     await prisma.card.create({
         data: {
